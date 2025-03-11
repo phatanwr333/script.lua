@@ -26,63 +26,69 @@ if not getgenv().Config then
     getgenv().Config = config
 end
 ]]
+repeat task.wait() until game.Players.LocalPlayer
+repeat task.wait() until game.Lighting
+repeat task.wait() until game.Workspace.Terrain
+
 local game = game
 local Workspace = game.Workspace
 local Lighting = game.Lighting
 local Terrain = Workspace.Terrain
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
+local sethiddenproperty = sethiddenproperty or (function(...) return ... end)
 
--- Function to disable objects in the game
 local function disableObject(v)
-    -- Disable textures
-    if getgenv().Config.disabled.texture then
-        if v:IsA("Decal") or v:IsA("Texture") then
-            v.Texture = ""
-        elseif v:IsA("Sky") then
-            v.Parent = nil
-        elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
-            v.Enabled = false
-        elseif v:IsA("MeshPart") then
-            v.Material = "Plastic"
-            v.Reflectance = 0
-            v.TextureID = 10385902758728957
-        elseif v:IsA("SpecialMesh") then
-            v.TextureId = 0
-        elseif v:IsA("ShirtGraphic") then
-            v.Graphic = 0
-        elseif (v:IsA("Shirt") or v:IsA("Pants")) then
-            v[v.ClassName.."Template"] = 0
+    pcall(function()
+        -- Disable textures
+        if getgenv().Config.disabled.texture then
+            if v:IsA("Decal") or v:IsA("Texture") then
+                v.Texture = ""
+            elseif v:IsA("Sky") then
+                v.Parent = nil
+            elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+                v.Enabled = false
+            elseif v:IsA("MeshPart") then
+                v.Material = "Plastic"
+                v.Reflectance = 0
+                v.TextureID = 10385902758728957
+            elseif v:IsA("SpecialMesh") then
+                v.TextureId = 0
+            elseif v:IsA("ShirtGraphic") then
+                v.Graphic = 0
+            elseif (v:IsA("Shirt") or v:IsA("Pants")) then
+                v[v.ClassName.."Template"] = 0
+            end
         end
-    end
 
-    -- Disable parts
-    if getgenv().Config.disabled.part then
-        if v:IsA("Part") or v:IsA("Union") or v:IsA("BasePart") then
-            v.Material = Enum.Material.SmoothPlastic
+        -- Disable parts
+        if getgenv().Config.disabled.part then
+            if v:IsA("Part") or v:IsA("Union") or v:IsA("BasePart") then
+                v.Material = Enum.Material.SmoothPlastic
+            end
         end
-    end
 
-    -- Disable explosions
-    if getgenv().Config.disabled.explosion then
-        if v:IsA("Explosion") then
-            v.BlastPressure = 1
-            v.BlastRadius = 1
+        -- Disable explosions
+        if getgenv().Config.disabled.explosion then
+            if v:IsA("Explosion") then
+                v.BlastPressure = 1
+                v.BlastRadius = 1
+            end
         end
-    end
 
-    -- Disable particles
-    if getgenv().Config.disabled.particles then
-        if v:IsA("ParticleEmitter") or v:IsA("Trail") then
-            v.Lifetime = NumberRange.new(0)
+        -- Disable particles
+        if getgenv().Config.disabled.particles then
+            if v:IsA("ParticleEmitter") or v:IsA("Trail") then
+                v.Lifetime = NumberRange.new(0)
+            end
         end
-    end
 
-    -- Modify Lighting and Terrain settings for performance
-    sethiddenproperty(Lighting, "Technology", 2)
-    sethiddenproperty(Terrain, "Decoration", false)
-    settings().Rendering.QualityLevel = 1
-    settings().Rendering.MeshPartDetailLevel = Enum.MeshPartDetailLevel.Level04
+        -- Modify Lighting and Terrain settings for performance
+        sethiddenproperty(Lighting, "Technology", 2)
+        sethiddenproperty(Terrain, "Decoration", false)
+        settings().Rendering.QualityLevel = 1
+        settings().Rendering.MeshPartDetailLevel = Enum.MeshPartDetailLevel.Level04
+    end)
 end
 
 -- Apply changes to existing descendants
