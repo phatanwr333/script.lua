@@ -72,10 +72,8 @@ function FPSBOOST_Extra(v)
 	workspace.InterpolationThrottling = Enum.InterpolationThrottlingMode.Enabled
 
     if sethiddenproperty then
-        pcall(function()
-            sethiddenproperty(Lighting, "Technology", Enum.Technology.Compatibility)
-            sethiddenproperty(Terrain, "Decoration", false)
-        end)
+        sethiddenproperty(Lighting, "Technology", Enum.Technology.Compatibility)
+        sethiddenproperty(Terrain, "Decoration", false)
     end
 end
 
@@ -98,5 +96,3 @@ end)
 UserInputService.WindowFocusReleased:Connect(function()
     setfpscap(360)
 end)
-
-print("FPS Boost Completed")
