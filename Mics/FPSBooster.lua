@@ -7,6 +7,7 @@ repeat task.wait() until game.Players.LocalPlayer
 
 local sethiddenproperty = sethiddenproperty or set_hidden_property or set_hidden_prop
 local Lighting = game:GetService("Lighting")
+local UserInputService = game:GetService("UserInputService")
 local Terrain = workspace.Terrain
 
 function FPSBOOST_Extra(v)
@@ -51,7 +52,8 @@ function FPSBOOST_Extra(v)
     end
 
     Lighting.GlobalShadows = false
-    Lighting.FogEnd = 9e9
+    Lighting.FogStart = 0
+    Lighting.FogEnd = 0
     Lighting.ShadowSoftness = 0
 
     Terrain.WaterWaveSize = 0
