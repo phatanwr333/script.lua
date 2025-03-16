@@ -45,12 +45,6 @@ function FPSBOOST_Extra(v)
         v.Enabled = false
     end
 
-    for _, effect in pairs(Lighting:GetChildren()) do
-        if effect:IsA("BlurEffect") or effect:IsA("SunRaysEffect") or effect:IsA("ColorCorrectionEffect") or effect:IsA("BloomEffect") or effect:IsA("DepthOfFieldEffect") then
-            effect.Enabled = false
-        end
-    end
-
     if Lighting:FindFirstChild("Sky") then
         Lighting.Sky:Destroy()
     end
@@ -69,9 +63,15 @@ function FPSBOOST_Extra(v)
         end
     end
 
-    Lighting.GlobalShadows = false
+    for _, effect in pairs(Lighting:GetChildren()) do
+        if effect:IsA("BlurEffect") or effect:IsA("SunRaysEffect") or effect:IsA("ColorCorrectionEffect") or effect:IsA("BloomEffect") or effect:IsA("DepthOfFieldEffect") then
+            effect.Enabled = false
+        end
+    end
+
     Lighting.FogStart = 9e9
     Lighting.FogEnd = 9e9
+    Lighting.GlobalShadows = false
     Lighting.ShadowSoftness = 0
 
     Terrain.WaterWaveSize = 0
@@ -113,3 +113,5 @@ end)
 UserInputService.WindowFocusReleased:Connect(function()
     setfpscap(360)
 end)
+
+print("FPS Booster by egodtheturtle: ✅ Completed")
