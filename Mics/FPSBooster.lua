@@ -42,9 +42,6 @@ function FPSBOOST_Extra(v)
         v.Lifetime = NumberRange.new(0)
     elseif v:IsA("Sparkles") or v:IsA("Smoke") or v:IsA("Fire") then
         v.Enabled = false
-    elseif v:IsA("ColorCorrectionEffect") or v:IsA("DepthOfFieldEffect") or v:IsA("SunRaysEffect") 
-        or v:IsA("BloomEffect") or v:IsA("BlurEffect") then
-        v.Enabled = false
     end
 
     for _, effect in pairs(Lighting:GetChildren()) do
