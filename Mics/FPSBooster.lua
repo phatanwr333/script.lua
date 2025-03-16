@@ -51,6 +51,24 @@ function FPSBOOST_Extra(v)
         end
     end
 
+    if Lighting:FindFirstChild("Sky") then
+        Lighting.Sky:Destroy()
+    end
+    if Lighting:FindFirstChild("BaseAtmosphere") then
+        Lighting.BaseAtmosphere:Destroy()
+    end
+    if Lighting:FindFirstChild("SeaTerrorCC") then
+        Lighting.SeaTerrorCC:Destroy()
+    end
+    if Lighting:FindFirstChild("LightingLayers") then
+        if Lighting.LightingLayers:FindFirstChild("Atmosphere") then
+            Lighting.LightingLayers.Atmosphere:Destroy()
+        end
+        if Lighting.LightingLayers:FindFirstChild("DarkFog") then
+            Lighting.LightingLayers.DarkFog:Destroy()
+        end
+    end
+
     Lighting.GlobalShadows = false
     Lighting.FogStart = 9e9
     Lighting.FogEnd = 9e9
