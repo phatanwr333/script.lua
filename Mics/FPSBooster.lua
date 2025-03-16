@@ -52,8 +52,8 @@ function FPSBOOST_Extra(v)
     end
 
     Lighting.GlobalShadows = false
-    Lighting.FogStart = 0
-    Lighting.FogEnd = 0
+    Lighting.FogStart = 9e9
+    Lighting.FogEnd = 9e9
     Lighting.ShadowSoftness = 0
 
     Terrain.WaterWaveSize = 0
