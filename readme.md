@@ -37,5 +37,5 @@
 
 ### 🌟 Featured Projects:
 - 🎮 [Roblox Blox Fruits Scripts](#)  
-- ⚡ [Roblox Utilities Scripts](#)  
+- ⚡ [Roblox Build a Boat For Treasure Scripts](#)  
 - 🚀 [More coming soon...]
