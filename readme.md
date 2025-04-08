@@ -1,5 +1,5 @@
 <h1 align="center">Hi 👋, I'm phatanwr333</h1>
-<h3 align="center">A passionate Roblox scripter 🇻🇳</h3>
+<h3 align="center">A Roblox scripter from **VN** </h3>
 
 <p align="center">
   <a href="https://discord.com/users/915056069020123187">
