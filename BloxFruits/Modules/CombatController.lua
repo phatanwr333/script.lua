@@ -1,7 +1,7 @@
 local Exports = {}
 
 local Players = game:GetService("Players")
-local Services = game:GetService("ReplicatedStorage") -- Bạn có thể thay thế nếu cần
+local Services = game:GetService("ReplicatedStorage")
 local Net = Services.Modules.Net
 
 local RegisterAttack = Net:WaitForChild("RE/RegisterAttack")
