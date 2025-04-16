@@ -1,52 +1,53 @@
-local Services = game:GetService
-local Players, workspace = Services("Players"), Services("Workspace")
-local LocalPlayer, Net = Players.LocalPlayer, Services("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Net")
-local RegisterAttack, RegisterHit = Net:WaitForChild("RE"):WaitForChild("RegisterAttack"), Net:WaitForChild("RE"):WaitForChild("RegisterHit")
+local Exports = {}
 
-local CombatModule = {}
+local Players = game:GetService("Players")
+local Services = game:GetService("ReplicatedStorage") -- Bạn có thể thay thế nếu cần
+local Net = Services.Modules.Net
 
-function CombatModule.GetPrimaryPart(model)
-    return model:FindFirstChild("HumanoidRootPart") or model:FindFirstChild("PrimaryPart")
+local RegisterAttack = Net:WaitForChild("RE/RegisterAttack")
+local RegisterHit = Net:WaitForChild("RE/RegisterHit")
+
+local function CalculateDistance(position)
+    local player = Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local rootPart = character:FindFirstChild("HumanoidRootPart")
+
+    if rootPart then
+        return (position - rootPart.Position).Magnitude
+    end
+
+    return math.huge
 end
 
-function CombatModule.IsValidTarget(target)
-    local humanoid = target and target:FindFirstChildOfClass("Humanoid")
-    return humanoid and humanoid.Health > 0 and (not Players:GetPlayerFromCharacter(target) or Players:GetPlayerFromCharacter(target).Team ~= LocalPlayer.Team)
+function Exports.GetHits()
+    local hits = {}
+
+    for _, enemy in ipairs(workspace.Enemies:GetChildren()) do
+        local primaryPart = enemy:FindFirstChild("PrimaryPart")
+
+        if primaryPart and CalculateDistance(primaryPart.Position) < 80 then
+            table.insert(hits, primaryPart)
+        end
+    end
+
+    return hits
 end
 
-function CombatModule.GetNearbyTargets()
-    local charPos = LocalPlayer.Character and LocalPlayer.Character.PrimaryPart.Position or Vector3.new()
-    local targets = {}
+function Exports.Attack()
+    local character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
 
-    for _, folder in ipairs({workspace.Characters, workspace.Enemies}) do
-        for _, entity in ipairs(folder:GetChildren()) do
-            if entity ~= LocalPlayer.Character and CombatModule.IsValidTarget(entity) then
-                local primaryPart = CombatModule.GetPrimaryPart(entity)
-                local dist = primaryPart and (primaryPart.Position - charPos).Magnitude
-                if dist and dist <= 200 then
-                    table.insert(targets, {part = primaryPart, distance = dist})
-                end
+    if character:FindFirstChildOfClass("Tool") then
+        local hits = Exports.GetHits()
+        local attackRegistered = false
+
+        for _, target in ipairs(hits) do
+            if not attackRegistered then
+                RegisterAttack:FireServer(0)
+                attackRegistered = true
             end
-        end
-    end
-
-    table.sort(targets, function(a, b) return a.distance < b.distance end)
-    return targets
-end
-
-function CombatModule.PerformAttackSequence(targets)
-    if #targets == 0 then return end
-    RegisterAttack:FireServer()
-
-    for i = 1, math.min(#targets, 5) do
-        for _ = 1, 3 do
-            RegisterHit:FireServer(targets[i].part)
+            RegisterHit:FireServer(target)
         end
     end
 end
 
-function CombatModule.CombatLoop()
-    CombatModule.PerformAttackSequence(CombatModule.GetNearbyTargets())
-end
-
-return CombatModule
+return Exports
