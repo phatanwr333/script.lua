@@ -3,7 +3,7 @@ local window = library.Window("Owner Tools")
 local scriptBaseUrl = "https://raw.githubusercontent.com/phatanwr333/script.lua/refs/heads/main/Mics/"
 
 window:Button("Save Instance", function()
-    setclipboard("https://raw.githubusercontent.com/phatanwr333/script.lua/refs/heads/main/Mics/ , find SaveIntance.lua")
+    setclipboard("https://raw.githubusercontent.com/phatanwr333/script.lua/refs/heads/main/Mics/SaveIntance.lua || example saveinstance(object, fn)")
 end)
 
 window:Button("Copy CFrame", function()
